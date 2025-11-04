@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EVIDA - Monitor de Sismos en Tiempo Real</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            color: white;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        
+        .subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .status {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-around;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .status-item {
+            text-align: center;
+        }
+        
+        .status-label {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+        
+        .status-value {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .status-value.connected {
+            color: #10b981;
+        }
+        
+        .status-value.disconnected {
+            color: #ef4444;
+        }
+        
+        .earthquakes {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .earthquake-card {
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin-bottom: 15px;
+            background: #f9fafb;
+            border-radius: 5px;
+            transition: transform 0.2s;
+        }
+        
+        .earthquake-card:hover {
+            transform: translateX(5px);
+        }
+        
+        .earthquake-card.new {
+            animation: slideIn 0.5s ease-out;
+            background: #fef3c7;
+            border-left-color: #f59e0b;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        .earthquake-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .magnitude {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #dc2626;
+            min-width: 60px;
+        }
+        
+        .location {
+            font-size: 1.1em;
+            font-weight: 500;
+            color: #374151;
+            flex: 1;
+            margin: 0 15px;
+        }
+        
+        .category {
+            background: #667eea;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            white-space: nowrap;
+        }
+        
+        .earthquake-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            color: #6b7280;
+            font-size: 0.9em;
+        }
+        
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .detail-label {
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+        
+        .source-badge {
+            display: inline-block;
+            background: #e5e7eb;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            margin-top: 5px;
+        }
+        
+        .no-earthquakes {
+            text-align: center;
+            padding: 40px;
+            color: #9ca3af;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f4f6;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌍 EVIDA Monitor</h1>
+        <p class="subtitle">Sistema de Monitoreo de Sismos en Tiempo Real</p>
+        
+        <div class="status">
+            <div class="status-item">
+                <div class="status-label">Conexión WebSocket</div>
+                <div class="status-value" id="wsStatus">Desconectado</div>
+            </div>
+            <div class="status-item">
+                <div class="status-label">Total de Sismos</div>
+                <div class="status-value" id="totalCount">0</div>
+            </div>
+            <div class="status-item">
+                <div class="status-label">Sismos Nuevos</div>
+                <div class="status-value" id="newCount">0</div>
+            </div>
+        </div>
+        
+        <div class="earthquakes">
+            <h2 style="margin-bottom: 20px; color: #374151;">Sismos Recientes</h2>
+            <div id="earthquakeList" class="loading">
+                <div class="spinner"></div>
+                <p style="margin-top: 20px; color: #6b7280;">Cargando datos...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let ws;
+        let earthquakes = [];
+        let newEarthquakeCount = 0;
+
+        // Conectar WebSocket
+        function connectWebSocket() {
+            const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsUrl = `${protocol}//${window.location.hostname}:8080/ws`;
+            
+            ws = new WebSocket(wsUrl);
+
+            ws.onopen = () => {
+                console.log('WebSocket conectado');
+                document.getElementById('wsStatus').textContent = 'Conectado';
+                document.getElementById('wsStatus').classList.remove('disconnected');
+                document.getElementById('wsStatus').classList.add('connected');
+            };
+
+            ws.onclose = () => {
+                console.log('WebSocket desconectado');
+                document.getElementById('wsStatus').textContent = 'Desconectado';
+                document.getElementById('wsStatus').classList.remove('connected');
+                document.getElementById('wsStatus').classList.add('disconnected');
+                
+                // Reconectar después de 5 segundos
+                setTimeout(connectWebSocket, 5000);
+            };
+
+            ws.onerror = (error) => {
+                console.error('Error WebSocket:', error);
+            };
+
+            ws.onmessage = (event) => {
+                const message = JSON.parse(event.data);
+                
+                if (message.type === 'new_earthquake') {
+                    handleNewEarthquake(message.data);
+                }
+            };
+        }
+
+        // Manejar nuevo sismo
+        function handleNewEarthquake(earthquake) {
+            console.log('Nuevo sismo recibido:', earthquake);
+            
+            // Agregar al principio de la lista
+            earthquakes.unshift(earthquake);
+            
+            // Incrementar contador
+            newEarthquakeCount++;
+            document.getElementById('newCount').textContent = newEarthquakeCount;
+            
+            // Actualizar UI
+            renderEarthquakes(true);
+            
+            // Notificación del navegador
+            if (Notification.permission === 'granted') {
+                new Notification(`Sismo M${earthquake.magnitude}`, {
+                    body: earthquake.location,
+                    icon: '🌍'
+                });
+            }
+        }
+
+        // Cargar sismos iniciales
+        async function loadEarthquakes() {
+            try {
+                const response = await fetch('http://localhost:8080/api/earthquakes');
+                earthquakes = await response.json() || [];
+                document.getElementById('totalCount').textContent = earthquakes.length;
+                renderEarthquakes(false);
+            } catch (error) {
+                console.error('Error cargando sismos:', error);
+                document.getElementById('earthquakeList').innerHTML = 
+                    '<div class="no-earthquakes">Error cargando datos. ¿Está el servidor corriendo?</div>';
+            }
+        }
+
+        // Renderizar lista de sismos
+        function renderEarthquakes(highlightFirst) {
+            const container = document.getElementById('earthquakeList');
+            
+            if (earthquakes.length === 0) {
+                container.innerHTML = '<div class="no-earthquakes">No hay sismos registrados</div>';
+                return;
+            }
+            
+            container.innerHTML = earthquakes.map((eq, index) => {
+                const date = new Date(eq.time);
+                const isNew = highlightFirst && index === 0;
+                
+                return `
+                    <div class="earthquake-card ${isNew ? 'new' : ''}">
+                        <div class="earthquake-header">
+                            <div class="magnitude">M${eq.magnitude.toFixed(1)}</div>
+                            <div class="location">${eq.location}</div>
+                            <div class="category">${eq.category || 'N/A'}</div>
+                        </div>
+                        <div class="earthquake-details">
+                            <div class="detail-item">
+                                <span class="detail-label">📅 Fecha</span>
+                                <span>${date.toLocaleDateString('es-ES')}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">🕐 Hora</span>
+                                <span>${date.toLocaleTimeString('es-ES')}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">📍 Coordenadas</span>
+                                <span>${eq.latitude.toFixed(2)}°, ${eq.longitude.toFixed(2)}°</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">⬇️ Profundidad</span>
+                                <span>${eq.depth.toFixed(1)} km</span>
+                            </div>
+                        </div>
+                        <span class="source-badge">Fuente: ${eq.source}</span>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Solicitar permisos de notificación
+        if (Notification.permission === 'default') {
+            Notification.requestPermission();
+        }
+
+        // Inicializar
+        loadEarthquakes();
+        connectWebSocket();
+        
+        // Recargar datos cada 2 minutos
+        setInterval(loadEarthquakes, 120000);
+    </script>
+</body>
+</html>
