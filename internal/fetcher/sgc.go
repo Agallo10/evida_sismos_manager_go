@@ -47,21 +47,22 @@ type SGCResponse struct {
 			CDI       float64     `json:"cdi"`
 			MMI       float64     `json:"mmi"`
 			Alert     string      `json:"alert"`
-			Status    string      `json:"status"`
-			Tsunami   int         `json:"tsunami"`
-			Sig       int         `json:"sig"`
-			Net       string      `json:"net"`
-			Code      string      `json:"code"`
-			IDS       string      `json:"ids"`
-			Sources   string      `json:"sources"`
-			Types     string      `json:"types"`
-			NST       int         `json:"nst"`
-			Dmin      float64     `json:"dmin"`
-			RMS       float64     `json:"rms"`
-			Gap       float64     `json:"gap"`
-			MagType   string      `json:"magType"`
-			Type      string      `json:"type"`
-			Title     string      `json:"title"`
+		Status    string      `json:"status"`
+		Tsunami   int         `json:"tsunami"`
+		Sig       int         `json:"sig"`
+		Net       string      `json:"net"`
+		Code      string      `json:"code"`
+		IDS       string      `json:"ids"`
+		Sources   string      `json:"sources"`
+		Types     string      `json:"types"`
+		NST       int         `json:"nst"`
+		Dmin      float64     `json:"dmin"`
+		RMS       float64     `json:"rms"`
+		Gap       float64     `json:"gap"`
+		MagType   string      `json:"magType"`
+		Type      string      `json:"type"`
+		Title     string      `json:"title"`
+		CloserTowns string    `json:"closerTowns"`
 		} `json:"properties"`
 	} `json:"features"`
 }
@@ -117,15 +118,16 @@ func (f *SGCFetcher) Fetch() ([]models.Earthquake, error) {
 		}
 
 		eq := models.Earthquake{
-			ID:        feature.ID,
-			Magnitude: feature.Properties.Mag,
-			Location:  feature.Properties.Place,
-			Longitude: feature.Geometry.Coordinates[1],
-			Latitude:  feature.Geometry.Coordinates[0],
-			Depth:     feature.Geometry.Coordinates[2],
-			Time:      eqTime,
-			Source:    "SGC",
-			URL:       feature.Properties.URL,
+			ID:          feature.ID,
+			Magnitude:   feature.Properties.Mag,
+			Location:    feature.Properties.Place,
+			Longitude:   feature.Geometry.Coordinates[1],
+			Latitude:    feature.Geometry.Coordinates[0],
+			Depth:       feature.Geometry.Coordinates[2],
+			Time:        eqTime,
+			Source:      "SGC",
+			URL:         feature.Properties.URL,
+			CloserTowns: feature.Properties.CloserTowns,
 		}
 
 		earthquakes = append(earthquakes, eq)

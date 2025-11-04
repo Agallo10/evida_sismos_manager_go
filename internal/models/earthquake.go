@@ -18,6 +18,7 @@ type Earthquake struct {
 	Oceano       string    `json:"oceano,omitempty"`       // Pacifico, Caribe
 	OceanoRegion string    `json:"oceanoRegion,omitempty"` // local, regional, lejano
 	URL          string    `json:"url,omitempty"`
+	CloserTowns  string    `json:"closerTowns,omitempty"`  // Pueblos cercanos (SGC)
 }
 
 // MarshalJSON personaliza la serialización del Earthquake para formatear el tiempo
