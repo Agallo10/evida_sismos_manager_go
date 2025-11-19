@@ -8,13 +8,14 @@ import (
 // Earthquake representa un sismo con toda su información
 type Earthquake struct {
 	ID           string    `json:"id"`
-	Magnitude    float64   `json:"magnitude"`
-	Location     string    `json:"location"`
-	Latitude     float64   `json:"latitude"`
-	Longitude    float64   `json:"longitude"`
-	Depth        float64   `json:"depth"`                  // en kilómetros
-	Time         time.Time `json:"-"`                      // Ocultamos el campo original
-	Source       string    `json:"source"`                 // USGS, GEOFON, SGC
+	Magnitud     float64   `json:"magnitud"`
+	Place        string    `json:"place"`
+	CloserTowns  string    `json:"closerTowns,omitempty"`
+	Latitud      float64   `json:"latitud"`
+	Longitud     float64   `json:"longitud"`
+	Profundidad  float64   `json:"profundidad"`            // en kilómetros
+	Time         time.Time `json:"-"`                      // Campo interno (UTC)
+	Fuente       string    `json:"fuente"`                 // USGS, GEOFON, SGC
 	Oceano       string    `json:"oceano,omitempty"`       // Pacifico, Caribe
 	OceanoRegion string    `json:"oceanoRegion,omitempty"` // local, regional, lejano
 	URL          string    `json:"url,omitempty"`
@@ -24,11 +25,11 @@ type Earthquake struct {
 func (e Earthquake) MarshalJSON() ([]byte, error) {
 	type Alias Earthquake
 	return json.Marshal(&struct {
-		Time string `json:"time"`
+		LocalTime string `json:"localTime"`
 		*Alias
 	}{
-		Time:  e.Time.Format("2006-01-02 15:04:05"),
-		Alias: (*Alias)(&e),
+		LocalTime: e.Time.Format("2006-01-02 15:04:05"),
+		Alias:     (*Alias)(&e),
 	})
 }
 

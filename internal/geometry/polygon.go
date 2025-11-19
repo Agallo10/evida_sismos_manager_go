@@ -59,8 +59,8 @@ func CategorizeEarthquake(eq *models.Earthquake) {
 	}
 
 	point := models.Point{
-		Lat: eq.Latitude,
-		Lon: eq.Longitude,
+		Lat: eq.Latitud,
+		Lon: eq.Longitud,
 	}
 
 	// Determinar región del océano Pacífico con subregión

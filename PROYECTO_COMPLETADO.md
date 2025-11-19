@@ -21,7 +21,9 @@ He creado exitosamente una aplicación en **Go** que:
    - Corre continuamente como servicio
    - Actualiza datos cada 2 minutos
    - Detecta sismos nuevos automáticamente
+   - **Detecta actualizaciones de parámetros** (magnitud, profundidad, ubicación, etc.)
    - Notifica mediante **WebSocket** a clientes conectados
+   - Distingue entre sismos nuevos (🔔) y actualizados (🔄)
 
 4. **API REST completa**:
    - `GET /api/earthquakes` - Todos los sismos
@@ -33,6 +35,7 @@ He creado exitosamente una aplicación en **Go** que:
 5. **Gestión en memoria**:
    - Thread-safe con `sync.RWMutex`
    - Detección automática de duplicados
+   - **Detección de cambios en sismos existentes**
    - Limpieza automática de sismos antiguos (>7 días)
    - Lista siempre ordenada por tiempo (más reciente primero)
 
@@ -113,15 +116,36 @@ ws.onmessage = (event) => {
         console.log('Nuevo sismo:', message.data);
         // {
         //   id: "us7000xxx",
-        //   magnitude: 5.2,
-        //   location: "...",
+        //   magnitud: 5.2,
+        //   place: "...",
+        //   closerTowns: "...",
+        //   latitud: 4.5,
+        //   longitud: -75.2,
+        //   profundidad: 10.5,
+        //   localTime: "2025-11-03 07:34:56",
+        //   fuente: "USGS",
         //   oceano: "Pacifico",
         //   oceanoRegion: "local",
-        //   ...
+        //   url: "https://earthquake.usgs.gov/..."
         // }
     }
 };
 ```
+
+**Detección de Actualizaciones:**
+
+El sistema monitorea cambios en los siguientes parámetros de sismos existentes:
+- `magnitud` - Las agencias frecuentemente revisan las magnitudes
+- `place` y `closerTowns` - Actualizaciones en la descripción de ubicación
+- `latitud` y `longitud` - Refinamiento de coordenadas
+- `profundidad` - Ajustes en la profundidad del hipocentro
+- `oceano` y `oceanoRegion` - Recategorización si cambian las coordenadas
+- `localTime` - Corrección del tiempo del evento
+
+Cuando se detecta cualquier cambio, el sistema:
+1. Actualiza el sismo en memoria
+2. Envía notificación por WebSocket con los datos actualizados
+3. Registra en logs: `🔄 Sismo actualizado: M5.2 - ...`
 
 ### 🔧 Configuración
 
@@ -156,14 +180,23 @@ const (
    - Caribe CC: 5 polígonos
    - Caribe Regional: 5 polígonos
 
-✅ 126 sismos cargados desde USGS
+✅ Tres fuentes de datos integradas y funcionando:
+   - USGS: ~90 sismos M >= 4.5
+   - GEOFON: ~20 sismos RSS feed
+   - SGC: ~350 sismos últimos 5 días
+
+✅ Sistema de actualización implementado:
+   - Detecta cambios en parámetros de sismos
+   - Notifica actualizaciones por WebSocket
+   - Logs diferencian nuevos (🔔) vs actualizados (🔄)
 
 ✅ Categorización funcionando:
-   - Pacifico lejano: 15 sismos
-   - Pacifico regional: 1 sismo
-   - Caribe local: 1 sismo
-   - Caribe regional: 9 sismos
-   - Uncategorized: 100 sismos (fuera de las regiones)
+   - Pacifico local: Sismos cercanos a Colombia
+   - Pacifico regional: Costa Rica, Ecuador, Panamá
+   - Pacifico lejano: Resto del Pacífico
+   - Caribe local: Mar Caribe cerca de Colombia
+   - Caribe regional: Venezuela, República Dominicana, etc.
+   - Caribe lejano: Atlántico Norte
 ```
 
 ### 🎨 Interfaz Web
@@ -182,21 +215,34 @@ docker run -p 8080:8080 evida-backend:latest
 
 ### 📝 Notas Importantes
 
-1. **GEOFON** devuelve RSS en lugar de Atom Feed - el parser necesita ajustes
-2. **SGC** tiene un formato de JSON ligeramente diferente - el parser necesita ajustes
-3. **USGS** funciona perfectamente
-4. La aplicación maneja errores de fetchers gracefully sin interrumpir el servicio
+1. **USGS**: ✅ Funcionando perfectamente con GeoJSON
+2. **GEOFON**: ✅ Parser de RSS implementado y funcionando
+3. **SGC**: ✅ Parser de JSON implementado con manejo de `closerTowns`
+4. **Campos en español**: Todos los campos principales están en español (magnitud, place, closerTowns, latitud, longitud, profundidad, fuente)
+5. **Zona horaria**: Todos los tiempos se convierten a UTC-5 (Bogotá) con formato `localTime`
+6. **URLs de mapas SGC**: Formato `https://archive.sgc.gov.co/events/{ID}/map.gif`
+7. **Sistema de actualizaciones**: Detecta y notifica cambios en cualquier parámetro de sismos existentes
+
+### 🔄 Mejoras Recientes
+
+- ✅ **Sistema de detección de actualizaciones** (19/11/2025)
+  - Compara todos los parámetros importantes al recibir datos
+  - Envía notificaciones diferenciadas por WebSocket
+  - Logs distinguen entre sismos nuevos y actualizados
+  - Thread-safe con manejo de canales non-blocking
 
 ### 🔄 Próximos Pasos (Opcionales)
 
-- [ ] Corregir parser de GEOFON para RSS
-- [ ] Ajustar parser de SGC para su formato específico
 - [ ] Agregar persistencia en base de datos (PostgreSQL/MongoDB)
+- [ ] Implementar caché de polígonos para mejorar rendimiento
 - [ ] Agregar autenticación para el WebSocket
 - [ ] Implementar rate limiting
 - [ ] Agregar métricas con Prometheus
 - [ ] Crear cliente de línea de comandos
 - [ ] Implementar filtros adicionales (magnitud mínima, fecha)
+- [ ] Historial de cambios de sismos (tracking de revisiones)
+- [ ] Panel de administración web
+- [ ] Notificaciones push a dispositivos móviles
 
 ### 📜 Licencia
 

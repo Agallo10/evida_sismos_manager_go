@@ -9,14 +9,20 @@ import (
 	"github.com/andresgallo/evida_backend_go/internal/models"
 )
 
+// EarthquakeEvent representa un evento de sismo (nuevo o actualizado)
+type EarthquakeEvent struct {
+	Earthquake models.Earthquake
+	IsUpdate   bool // true si es actualización, false si es nuevo
+}
+
 // EarthquakeManager gestiona los sismos en memoria
 type EarthquakeManager struct {
 	mu          sync.RWMutex
 	earthquakes map[string]models.Earthquake // ID -> Earthquake
 	maxAge      time.Duration                // Tiempo máximo para mantener sismos en memoria
 
-	// Canal para notificar nuevos sismos
-	newEarthquakeChan chan models.Earthquake
+	// Canal para notificar nuevos sismos o actualizaciones
+	newEarthquakeChan chan EarthquakeEvent
 }
 
 // NewEarthquakeManager crea un nuevo gestor de sismos
@@ -24,20 +30,17 @@ func NewEarthquakeManager(maxAge time.Duration) *EarthquakeManager {
 	return &EarthquakeManager{
 		earthquakes:       make(map[string]models.Earthquake),
 		maxAge:            maxAge,
-		newEarthquakeChan: make(chan models.Earthquake, 100),
+		newEarthquakeChan: make(chan EarthquakeEvent, 100),
 	}
 }
 
 // AddEarthquake agrega un sismo al gestor
 // Retorna true si es un sismo nuevo y categorizado, false si ya existía o no fue categorizado
+// AddEarthquake agrega un sismo al gestor
+// Retorna true si es un sismo nuevo y categorizado, false si ya existía o no fue categorizado
 func (em *EarthquakeManager) AddEarthquake(eq models.Earthquake) bool {
 	em.mu.Lock()
 	defer em.mu.Unlock()
-
-	// Verificar si ya existe
-	if _, exists := em.earthquakes[eq.ID]; exists {
-		return false
-	}
 
 	// Categorizar el sismo
 	geometry.CategorizeEarthquake(&eq)
@@ -49,12 +52,40 @@ func (em *EarthquakeManager) AddEarthquake(eq models.Earthquake) bool {
 		return false
 	}
 
-	// Agregar al mapa
+	// Verificar si ya existe
+	if existingEq, exists := em.earthquakes[eq.ID]; exists {
+		// Comparar si hubo cambios en los parámetros importantes
+		hasChanged := existingEq.Magnitud != eq.Magnitud ||
+			existingEq.Place != eq.Place ||
+			existingEq.CloserTowns != eq.CloserTowns ||
+			existingEq.Latitud != eq.Latitud ||
+			existingEq.Longitud != eq.Longitud ||
+			existingEq.Profundidad != eq.Profundidad ||
+			existingEq.Oceano != eq.Oceano ||
+			existingEq.OceanoRegion != eq.OceanoRegion ||
+			!existingEq.Time.Equal(eq.Time)
+
+		if hasChanged {
+			// Actualizar el sismo en el mapa
+			em.earthquakes[eq.ID] = eq
+
+			// Notificar actualización mediante el canal (non-blocking)
+			select {
+			case em.newEarthquakeChan <- EarthquakeEvent{Earthquake: eq, IsUpdate: true}:
+			default:
+				// Si el canal está lleno, no bloqueamos
+			}
+		}
+
+		return false // Ya existía (aunque se haya actualizado)
+	}
+
+	// Agregar nuevo sismo al mapa
 	em.earthquakes[eq.ID] = eq
 
-	// Notificar mediante el canal (non-blocking)
+	// Notificar nuevo sismo mediante el canal (non-blocking)
 	select {
-	case em.newEarthquakeChan <- eq:
+	case em.newEarthquakeChan <- EarthquakeEvent{Earthquake: eq, IsUpdate: false}:
 	default:
 		// Si el canal está lleno, no bloqueamos
 	}
@@ -205,7 +236,7 @@ func (em *EarthquakeManager) StartCleanup(interval time.Duration) {
 }
 
 // GetNewEarthquakeChannel retorna el canal para recibir notificaciones de nuevos sismos
-func (em *EarthquakeManager) GetNewEarthquakeChannel() <-chan models.Earthquake {
+func (em *EarthquakeManager) GetNewEarthquakeChannel() <-chan EarthquakeEvent {
 	return em.newEarthquakeChan
 }
 
@@ -234,7 +265,7 @@ func (em *EarthquakeManager) GetStats() map[string]interface{} {
 	// Contar por fuente
 	bySource := make(map[string]int)
 	for _, eq := range em.earthquakes {
-		bySource[eq.Source]++
+		bySource[eq.Fuente]++
 	}
 	stats["by_source"] = bySource
 

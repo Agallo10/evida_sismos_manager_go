@@ -10,10 +10,12 @@ Sistema en tiempo real que extrae información de sismos de múltiples fuentes (
   - **SGC** (Servicio Geológico Colombiano) - Últimos 5 días
 - ✅ Categorización geográfica mediante algoritmo Point-in-Polygon
 - ✅ Clasificación por océano (Pacífico, Caribe) y región (local, regional, lejano)
-- ✅ Notificaciones en tiempo real vía WebSocket
+- ✅ **Detección automática de actualizaciones** - Detecta cambios en parámetros de sismos existentes
+- ✅ Notificaciones en tiempo real vía WebSocket para sismos nuevos y actualizados
 - ✅ API REST para consultar sismos
-- ✅ Almacenamiento en memoria (sin base de datos)
+- ✅ Almacenamiento en memoria con gestión thread-safe
 - ✅ Lista ordenada por tiempo
+- ✅ Limpieza automática de sismos antiguos (>7 días)
 
 ## Instalación
 
@@ -34,24 +36,39 @@ go run cmd/server/main.go
 ### WebSocket
 Conectarse a: `ws://localhost:8080/ws`
 
-Recibirás notificaciones JSON cuando lleguen sismos nuevos:
+Recibirás notificaciones JSON cuando lleguen sismos nuevos o se actualicen:
+
+**Sismo Nuevo:**
 ```json
 {
   "type": "new_earthquake",
   "data": {
     "id": "us7000example",
-    "magnitude": 5.2,
-    "location": "10 km S of Example City",
-    "latitude": 4.5,
-    "longitude": -75.2,
-    "depth": 10.5,
-    "time": "2025-11-03T12:34:56Z",
-    "source": "USGS",
+    "magnitud": 5.2,
+    "place": "10 km S of Example City",
+    "closerTowns": "Example City",
+    "latitud": 4.5,
+    "longitud": -75.2,
+    "profundidad": 10.5,
+    "localTime": "2025-11-03 07:34:56",
+    "fuente": "USGS",
     "oceano": "Pacifico",
-    "oceanoRegion": "local"
+    "oceanoRegion": "local",
+    "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000example"
   }
 }
 ```
+
+**Sismo Actualizado:**
+Los sismos pueden actualizarse cuando las agencias revisan parámetros como magnitud, profundidad o ubicación. El sistema detecta automáticamente estos cambios comparando:
+- Magnitud
+- Ubicación (place y closerTowns)
+- Coordenadas (latitud, longitud)
+- Profundidad
+- Categorización (océano y región)
+- Tiempo del evento
+
+Cuando se detecta un cambio, se envía la misma estructura JSON con los valores actualizados.
 
 ### API REST
 

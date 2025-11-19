@@ -91,10 +91,10 @@ func parseGEOFONItem(item GEOFONItem) (models.Earthquake, error) {
 	// Formato: FECHA HORA  LATITUD  LONGITUD  PROFUNDIDAD  TIPO
 
 	eq := models.Earthquake{
-		ID:       item.GUID,
-		Location: item.Title,
-		Source:   "GEOFON",
-		URL:      item.Link,
+		ID:     item.GUID,
+		Place:  item.Title,
+		Fuente: "GEOFON",
+		URL:    item.Link,
 	}
 
 	// Parsear magnitud y ubicación del título
@@ -103,9 +103,11 @@ func parseGEOFONItem(item GEOFONItem) (models.Earthquake, error) {
 		if len(parts) == 2 {
 			magStr := strings.TrimSpace(strings.TrimPrefix(parts[0], "M "))
 			if mag, err := strconv.ParseFloat(magStr, 64); err == nil {
-				eq.Magnitude = mag
+				eq.Magnitud = mag
 			}
-			eq.Location = strings.TrimSpace(parts[1])
+			locationStr := strings.TrimSpace(parts[1])
+			eq.Place = locationStr
+			eq.CloserTowns = locationStr // Para GEOFON, closerTowns es igual a place
 		}
 	}
 
@@ -122,25 +124,27 @@ func parseGEOFONItem(item GEOFONItem) (models.Earthquake, error) {
 		// fields[5] = "km"
 		// fields[6] = tipo ("A", "M", "C")
 
-		// Parsear fecha y hora
+		// Parsear fecha y hora (viene en UTC)
 		dateTimeStr := fields[0] + " " + fields[1]
 		if t, err := time.Parse("2006-01-02 15:04:05", dateTimeStr); err == nil {
-			eq.Time = t
+			// Convertir UTC a hora local de Bogotá (UTC-5)
+			bogotaLocation := time.FixedZone("America/Bogota", -5*60*60)
+			eq.Time = t.In(bogotaLocation)
 		}
 
 		// Parsear latitud
 		if lat, err := strconv.ParseFloat(fields[2], 64); err == nil {
-			eq.Latitude = lat
+			eq.Latitud = lat
 		}
 
 		// Parsear longitud
 		if lon, err := strconv.ParseFloat(fields[3], 64); err == nil {
-			eq.Longitude = lon
+			eq.Longitud = lon
 		}
 
 		// Parsear profundidad
 		if depth, err := strconv.ParseFloat(fields[4], 64); err == nil {
-			eq.Depth = depth
+			eq.Profundidad = depth
 		}
 	}
 

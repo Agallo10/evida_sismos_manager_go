@@ -1,151 +1,151 @@
-2025/11/03 22:15:27 🌍 Iniciando EVIDA Backend - Sistema de Monitoreo de Sismos
-2025/11/03 22:15:28 ✅ Datos de regiones cargados correctamente
-2025/11/03 22:15:28    - Pacífico CP: 698123 puntos
-2025/11/03 22:15:28    - Pacífico Local: 75503 puntos
-2025/11/03 22:15:28    - Caribe CC: 5 polígonos
-2025/11/03 22:15:28    - Caribe Regional: 5 polígonos
-2025/11/03 22:15:28 ✅ Gestor de sismos inicializado
-2025/11/03 22:15:28 ✅ Limpieza automática configurada
-2025/11/03 22:15:28 ✅ Hub WebSocket iniciado
-2025/11/03 22:15:28 ✅ Configurados 3 fetchers de datos
-2025/11/03 22:15:28 ✅ Recolección de datos iniciada
-2025/11/03 22:15:28 ✅ Sistema de notificaciones iniciado
-2025/11/03 22:15:28 🔄 Obteniendo datos de sismos...
-2025/11/03 22:15:28 🚀 Servidor HTTP escuchando en :8080
-2025/11/03 22:15:28    - WebSocket: ws://localhost:8080/ws
-2025/11/03 22:15:28    - API: http://localhost:8080/api/earthquakes
-2025/11/03 22:15:28    - Stats: http://localhost:8080/api/stats
-2025/11/03 22:15:28    - Health: http://localhost:8080/api/health
-2025/11/03 22:15:28 🔔 Nuevo sismo detectado: M4.6 - south of the Fiji Islands [Pacifico lejano]
-2025/11/03 22:15:28 🔔 Nuevo sismo detectado: M4.6 - 246 km SSE of Alo, Wallis and Futuna [Pacifico lejano]
-2025/11/03 22:15:28 🔔 Nuevo sismo detectado: M5.5 - 113 km W of Copiapó, Chile [Pacifico lejano]
-2025/11/03 22:15:28 🔔 Nuevo sismo detectado: M4.7 - Drake Passage [Pacifico lejano]
-2025/11/03 22:15:28 🔔 Nuevo sismo detectado: M4.6 - Drake Passage [Pacifico lejano]
-2025/11/03 22:15:28 🔔 Nuevo sismo detectado: M4.7 - 67 km WNW of Arauco, Chile [Pacifico lejano]
-2025/11/03 22:15:28 🔔 Nuevo sismo detectado: M4.9 - south of the Fiji Islands [Pacifico lejano]
-2025/11/03 22:15:28 🔔 Nuevo sismo detectado: M5.0 - Drake Passage [Pacifico lejano]
-2025/11/03 22:15:28 🔔 Nuevo sismo detectado: M4.5 - south of the Fiji Islands [Pacifico lejano]
-2025/11/03 22:15:28 🔔 Nuevo sismo detectado: M4.5 - 105 km SE of Alo, Wallis and Futuna [Pacifico lejano]
-2025/11/03 22:15:28 🔔 Nuevo sismo detectado: M4.8 - 86 km SE of Burica, Panama [Pacifico regional]
-2025/11/03 22:15:28 🔔 Nuevo sismo detectado: M4.8 - 72 km SE of Hihifo, Tonga [Pacifico lejano]
-2025/11/03 22:15:29 🔔 Nuevo sismo detectado: M4.8 - 80 km NNE of San Ignacio de Tupile, Panama [Caribe local]
-2025/11/03 22:15:29 🔔 Nuevo sismo detectado: M4.5 - 157 km E of Beauséjour, Guadeloupe [Caribe regional]
-2025/11/03 22:15:29 🔔 Nuevo sismo detectado: M5.5 - Kermadec Islands region [Pacifico lejano]
-2025/11/03 22:15:29 🔔 Nuevo sismo detectado: M4.5 - 157 km E of Beauséjour, Guadeloupe [Caribe regional]
-2025/11/03 22:15:29 🔔 Nuevo sismo detectado: M4.7 - Drake Passage [Pacifico lejano]
-2025/11/03 22:15:29 🔔 Nuevo sismo detectado: M4.8 - 209 km ESE of Levuka, Fiji [Pacifico lejano]
-2025/11/03 22:15:29 🔔 Nuevo sismo detectado: M4.8 - 163 km E of Beauséjour, Guadeloupe [Caribe regional]
-2025/11/03 22:15:29 🔔 Nuevo sismo detectado: M5.4 - off the coast of Oregon [Pacifico lejano]
-2025/11/03 22:15:29 🔔 Nuevo sismo detectado: M4.8 - off the coast of Oregon [Pacifico lejano]
-2025/11/03 22:15:29 🔔 Nuevo sismo detectado: M4.7 - 155 km E of Beauséjour, Guadeloupe [Caribe regional]
-2025/11/03 22:15:29 🔔 Nuevo sismo detectado: M4.6 - south of the Fiji Islands [Pacifico lejano]
-2025/11/03 22:15:29 🔔 Nuevo sismo detectado: M4.6 - 159 km E of Beauséjour, Guadeloupe [Caribe regional]
-2025/11/03 22:15:29    ➕ Fuente 1: 24 nuevos sismos de 121 totales
-2025/11/03 22:15:29 🔔 Nuevo sismo detectado: M4.8 - South of Fiji Islands [Pacifico lejano]
-2025/11/03 22:15:29 🔔 Nuevo sismo detectado: M4.9 - Fiji Islands Region [Pacifico lejano]
-2025/11/03 22:15:29 🔔 Nuevo sismo detectado: M5.8 - Near Coast of Northern Chile [Pacifico lejano]
-2025/11/03 22:15:29    ➕ Fuente 2: 3 nuevos sismos de 20 totales
-2025/11/03 22:15:29 🔔 Nuevo sismo detectado: M2.4 - Océano Pacífico [Pacifico local]
-2025/11/03 22:15:29 🔔 Nuevo sismo detectado: M5.5 - Copiapo, Chile [Pacifico lejano]
-2025/11/03 22:15:29 🔔 Nuevo sismo detectado: M1.9 - Panama [Caribe local]
-2025/11/03 22:15:29 🔔 Nuevo sismo detectado: M2.7 - Costa Rica [Caribe regional]
-2025/11/03 22:15:29 🔔 Nuevo sismo detectado: M1.8 - Mar Caribe [Caribe local]
-2025/11/03 22:15:29 🔔 Nuevo sismo detectado: M1.7 - Mar Caribe [Caribe local]
-2025/11/03 22:15:29 🔔 Nuevo sismo detectado: M1.8 - Mar Caribe [Caribe local]
-2025/11/03 22:15:29 🔔 Nuevo sismo detectado: M2.7 - Océano Pacífico [Pacifico local]
-2025/11/03 22:15:29 🔔 Nuevo sismo detectado: M4.1 - Sur de Panama [Pacifico regional]
-2025/11/03 22:15:29 🔔 Nuevo sismo detectado: M4.8 - Burica, Panama [Pacifico regional]
-2025/11/03 22:15:30 🔔 Nuevo sismo detectado: M3.9 - Puerto Lopez - Manabi, Ecuador [Pacifico regional]
-2025/11/03 22:15:30 🔔 Nuevo sismo detectado: M5.1 - Panama-Colombia, Region Fronteriza [Caribe local]
-2025/11/03 22:15:30 🔔 Nuevo sismo detectado: M4.5 - Beausejour, Guadeloupe [Caribe regional]
-2025/11/03 22:15:30    ➕ Fuente 3: 13 nuevos sismos de 308 totales
-2025/11/03 22:15:30 ✅ Total: 40 nuevos sismos agregados
-2025/11/03 22:15:30    📊 Total en memoria: 40 sismos
-2025/11/03 22:17:30 🔄 Obteniendo datos de sismos...
-2025/11/03 22:17:31    ℹ️  No hay sismos nuevos
-2025/11/03 22:17:31    📊 Total en memoria: 40 sismos
-2025/11/03 22:19:30 🔄 Obteniendo datos de sismos...
-2025/11/03 22:19:31    ℹ️  No hay sismos nuevos
-2025/11/03 22:19:31    📊 Total en memoria: 40 sismos
-2025/11/03 22:21:30 🔄 Obteniendo datos de sismos...
-2025/11/03 22:21:33    ℹ️  No hay sismos nuevos
-2025/11/03 22:21:33    📊 Total en memoria: 40 sismos
-2025/11/03 22:23:30 🔄 Obteniendo datos de sismos...
-2025/11/03 22:23:32    ℹ️  No hay sismos nuevos
-2025/11/03 22:23:32    📊 Total en memoria: 40 sismos
-2025/11/03 22:25:30 🔄 Obteniendo datos de sismos...
-2025/11/03 22:25:31    ℹ️  No hay sismos nuevos
-2025/11/03 22:25:31    📊 Total en memoria: 40 sismos
-2025/11/03 22:27:30 🔄 Obteniendo datos de sismos...
-2025/11/03 22:27:32    ℹ️  No hay sismos nuevos
-2025/11/03 22:27:32    📊 Total en memoria: 40 sismos
-2025/11/03 22:29:30 🔄 Obteniendo datos de sismos...
-2025/11/03 22:29:31    ℹ️  No hay sismos nuevos
-2025/11/03 22:29:31    📊 Total en memoria: 40 sismos
-2025/11/03 22:31:30 🔄 Obteniendo datos de sismos...
-2025/11/03 22:31:31    ℹ️  No hay sismos nuevos
-2025/11/03 22:31:31    📊 Total en memoria: 40 sismos
-2025/11/03 22:33:30 🔄 Obteniendo datos de sismos...
-2025/11/03 22:33:31    ℹ️  No hay sismos nuevos
-2025/11/03 22:33:31    📊 Total en memoria: 40 sismos
-2025/11/03 22:35:30 🔄 Obteniendo datos de sismos...
-2025/11/03 22:35:31    ℹ️  No hay sismos nuevos
-2025/11/03 22:35:31    📊 Total en memoria: 40 sismos
-2025/11/03 22:37:30 🔄 Obteniendo datos de sismos...
-2025/11/03 22:37:33    ℹ️  No hay sismos nuevos
-2025/11/03 22:37:33    📊 Total en memoria: 40 sismos
-2025/11/03 22:39:30 🔄 Obteniendo datos de sismos...
-2025/11/03 22:39:33    ℹ️  No hay sismos nuevos
-2025/11/03 22:39:33    📊 Total en memoria: 40 sismos
-2025/11/03 22:41:30 🔄 Obteniendo datos de sismos...
-2025/11/03 22:41:31    ℹ️  No hay sismos nuevos
-2025/11/03 22:41:31    📊 Total en memoria: 40 sismos
-2025/11/03 22:43:30 🔄 Obteniendo datos de sismos...
-2025/11/03 22:43:31    ℹ️  No hay sismos nuevos
-2025/11/03 22:43:31    📊 Total en memoria: 40 sismos
-2025/11/03 22:45:30 🔄 Obteniendo datos de sismos...
-2025/11/03 22:45:31    ℹ️  No hay sismos nuevos
-2025/11/03 22:45:31    📊 Total en memoria: 40 sismos
-2025/11/03 22:47:30 🔄 Obteniendo datos de sismos...
-2025/11/03 22:47:34    ℹ️  No hay sismos nuevos
-2025/11/03 22:47:34    📊 Total en memoria: 40 sismos
-2025/11/03 22:49:30 🔄 Obteniendo datos de sismos...
-2025/11/03 22:49:31    ℹ️  No hay sismos nuevos
-2025/11/03 22:49:31    📊 Total en memoria: 40 sismos
-2025/11/03 22:51:30 🔄 Obteniendo datos de sismos...
-2025/11/03 22:51:35    ℹ️  No hay sismos nuevos
-2025/11/03 22:51:35    📊 Total en memoria: 40 sismos
-2025/11/03 22:53:30 🔄 Obteniendo datos de sismos...
-2025/11/03 22:53:33    ℹ️  No hay sismos nuevos
-2025/11/03 22:53:33    📊 Total en memoria: 40 sismos
-2025/11/03 23:02:27 🔄 Obteniendo datos de sismos...
-2025/11/03 23:02:29    ℹ️  No hay sismos nuevos
-2025/11/03 23:02:29    📊 Total en memoria: 40 sismos
-2025/11/03 23:04:27 🔄 Obteniendo datos de sismos...
-2025/11/03 23:04:29    ℹ️  No hay sismos nuevos
-2025/11/03 23:04:29    📊 Total en memoria: 40 sismos
-2025/11/03 23:06:27 🔄 Obteniendo datos de sismos...
-2025/11/03 23:06:28    ℹ️  No hay sismos nuevos
-2025/11/03 23:06:28    📊 Total en memoria: 40 sismos
-2025/11/03 23:08:27 🔄 Obteniendo datos de sismos...
-2025/11/03 23:08:28    ℹ️  No hay sismos nuevos
-2025/11/03 23:08:28    📊 Total en memoria: 40 sismos
-2025/11/03 23:10:27 🔄 Obteniendo datos de sismos...
-2025/11/03 23:10:29    ℹ️  No hay sismos nuevos
-2025/11/03 23:10:29    📊 Total en memoria: 40 sismos
-2025/11/03 23:12:27 🔄 Obteniendo datos de sismos...
-2025/11/03 23:12:28    ℹ️  No hay sismos nuevos
-2025/11/03 23:12:28    📊 Total en memoria: 40 sismos
-2025/11/03 23:14:27 🔄 Obteniendo datos de sismos...
-2025/11/03 23:14:29    ℹ️  No hay sismos nuevos
-2025/11/03 23:14:29    📊 Total en memoria: 40 sismos
-2025/11/03 23:16:27 🔄 Obteniendo datos de sismos...
-2025/11/03 23:16:28    ℹ️  No hay sismos nuevos
-2025/11/03 23:16:28    📊 Total en memoria: 40 sismos
-2025/11/03 23:18:27 🔄 Obteniendo datos de sismos...
-2025/11/03 23:18:28    ℹ️  No hay sismos nuevos
-2025/11/03 23:18:28    📊 Total en memoria: 40 sismos
-2025/11/03 23:20:22 
-🛑 Apagando servidor...
-2025/11/03 23:20:22 ✅ Servidor apagado correctamente
-2025/11/03 23:20:22 Deteniendo recolección de datos
+2025/11/19 10:58:47 🌍 Iniciando EVIDA Backend - Sistema de Monitoreo de Sismos
+2025/11/19 10:58:48 ✅ Datos de regiones cargados correctamente
+2025/11/19 10:58:48    - Pacífico CP: 698123 puntos
+2025/11/19 10:58:48    - Pacífico Local: 75503 puntos
+2025/11/19 10:58:48    - Caribe CC: 5 polígonos
+2025/11/19 10:58:48    - Caribe Regional: 5 polígonos
+2025/11/19 10:58:48 ✅ Gestor de sismos inicializado
+2025/11/19 10:58:48 ✅ Limpieza automática configurada
+2025/11/19 10:58:48 ✅ Hub WebSocket iniciado
+2025/11/19 10:58:48 ✅ Configurados 3 fetchers de datos
+2025/11/19 10:58:48 ✅ Recolección de datos iniciada
+2025/11/19 10:58:48 ✅ Sistema de notificaciones iniciado
+2025/11/19 10:58:48 🔄 Obteniendo datos de sismos...
+2025/11/19 10:58:48 🚀 Servidor HTTP escuchando en :8080
+2025/11/19 10:58:48    - WebSocket: ws://localhost:8080/ws
+2025/11/19 10:58:48    - API: http://localhost:8080/api/earthquakes
+2025/11/19 10:58:48    - Stats: http://localhost:8080/api/stats
+2025/11/19 10:58:48    - Health: http://localhost:8080/api/health
+2025/11/19 10:58:48 🔔 Nuevo sismo detectado: M4.9 - south of the Fiji Islands [Pacifico lejano]
+2025/11/19 10:58:48 🔔 Nuevo sismo detectado: M5.0 - 131 km WSW of Lebu, Chile [Pacifico lejano]
+2025/11/19 10:58:48 🔔 Nuevo sismo detectado: M5.0 - 34 km NNE of Yaguaraparo, Venezuela [Caribe regional]
+2025/11/19 10:58:48 🔔 Nuevo sismo detectado: M5.4 - 57 km WSW of Puerto Cortés, Costa Rica [Pacifico regional]
+2025/11/19 10:58:48 🔔 Nuevo sismo detectado: M4.8 - West Chile Rise [Pacifico lejano]
+2025/11/19 10:58:48 🔔 Nuevo sismo detectado: M4.7 - south of the Fiji Islands [Pacifico lejano]
+2025/11/19 10:58:48 🔔 Nuevo sismo detectado: M4.5 - 96 km SSE of Sand Point, Alaska [Pacifico lejano]
+2025/11/19 10:58:48 🔔 Nuevo sismo detectado: M4.9 - Kermadec Islands, New Zealand [Pacifico lejano]
+2025/11/19 10:58:48 🔔 Nuevo sismo detectado: M4.7 - 52 km WSW of Puerto Cortés, Costa Rica [Pacifico regional]
+2025/11/19 10:58:48 🔔 Nuevo sismo detectado: M4.7 - 87 km NW of Puerto Villamil, Ecuador [Pacifico regional]
+2025/11/19 10:58:48 🔔 Nuevo sismo detectado: M5.0 - central East Pacific Rise [Pacifico lejano]
+2025/11/19 10:58:48 🔔 Nuevo sismo detectado: M5.2 - Revilla Gigedo Islands region [Pacifico lejano]
+2025/11/19 10:58:48 🔔 Nuevo sismo detectado: M5.0 - 144 km S of ‘Ohonua, Tonga [Pacifico lejano]
+2025/11/19 10:58:48 🔔 Nuevo sismo detectado: M4.5 - 241 km E of Levuka, Fiji [Pacifico lejano]
+2025/11/19 10:58:48 🔔 Nuevo sismo detectado: M4.6 - 73 km W of Ovalle, Chile [Pacifico lejano]
+2025/11/19 10:58:48 🔔 Nuevo sismo detectado: M4.9 - 73 km WNW of Houma, Tonga [Pacifico lejano]
+2025/11/19 10:58:48 🔔 Nuevo sismo detectado: M4.9 - 162 km E of Beauséjour, Guadeloupe [Caribe regional]
+2025/11/19 10:58:48 🔔 Nuevo sismo detectado: M4.5 - 290 km WNW of Houma, Tonga [Pacifico lejano]
+2025/11/19 10:58:48 🔔 Nuevo sismo detectado: M4.9 - 212 km WNW of Hihifo, Tonga [Pacifico lejano]
+2025/11/19 10:58:48 🔔 Nuevo sismo detectado: M5.0 - 79 km WSW of Vallenar, Chile [Pacifico lejano]
+2025/11/19 10:58:48 🔔 Nuevo sismo detectado: M5.7 - 219 km WNW of Hihifo, Tonga [Pacifico lejano]
+2025/11/19 10:58:48 🔔 Nuevo sismo detectado: M4.9 - Reykjanes Ridge [Caribe lejano]
+2025/11/19 10:58:48 🔔 Nuevo sismo detectado: M4.5 - 153 km E of Beauséjour, Guadeloupe [Caribe regional]
+2025/11/19 10:58:48 🔔 Nuevo sismo detectado: M5.0 - central Mid-Atlantic Ridge [Caribe lejano]
+2025/11/19 10:58:48 🔔 Nuevo sismo detectado: M4.5 - 224 km ENE of Levuka, Fiji [Pacifico lejano]
+2025/11/19 10:58:48 🔔 Nuevo sismo detectado: M5.7 - Pacific-Antarctic Ridge [Pacifico lejano]
+2025/11/19 10:58:48    ➕ Fuente 1: 26 nuevos sismos de 89 totales
+2025/11/19 10:58:49 🔔 Nuevo sismo detectado: M5.0 - Kermadec Islands, New Zealand [Pacifico lejano]
+2025/11/19 10:58:49 🔔 Nuevo sismo detectado: M5.0 - South of Fiji Islands [Pacifico lejano]
+2025/11/19 10:58:49 🔔 Nuevo sismo detectado: M5.0 - Off Coast of Central Chile [Pacifico lejano]
+2025/11/19 10:58:49 🔔 Nuevo sismo detectado: M5.0 - Near Coast of Venezuela [Caribe regional]
+2025/11/19 10:58:49 🔔 Nuevo sismo detectado: M5.7 - Off Coast of Costa Rica [Pacifico regional]
+2025/11/19 10:58:49 🔔 Nuevo sismo detectado: M4.8 - West Chile Rise [Pacifico lejano]
+2025/11/19 10:58:49 🔔 Nuevo sismo detectado: M4.2 - Off Coast of Oregon [Pacifico lejano]
+2025/11/19 10:58:49 🔔 Nuevo sismo detectado: M4.9 - Alaska Peninsula [Pacifico lejano]
+2025/11/19 10:58:49    ➕ Fuente 2: 8 nuevos sismos de 20 totales
+2025/11/19 10:58:49 🔔 Nuevo sismo detectado: M1.8 - Mar Caribe [Caribe local]
+2025/11/19 10:58:49 🔔 Nuevo sismo detectado: M2.7 - Juradó - Chocó, Colombia [Pacifico local]
+2025/11/19 10:58:49 🔔 Nuevo sismo detectado: M5.0 - Yaguaraparo, Venezuela [Caribe regional]
+2025/11/19 10:58:49 🔔 Nuevo sismo detectado: M5.4 - Quepos, Costa Rica [Pacifico regional]
+2025/11/19 10:58:49 🔔 Nuevo sismo detectado: M1.6 - Mar Caribe [Caribe local]
+2025/11/19 10:58:49 🔔 Nuevo sismo detectado: M2.2 - Océano Pacífico [Pacifico local]
+2025/11/19 10:58:49 🔔 Nuevo sismo detectado: M2.1 - Juradó - Chocó, Colombia [Pacifico local]
+2025/11/19 10:58:49 🔔 Nuevo sismo detectado: M2.0 - Océano Pacífico [Pacifico local]
+2025/11/19 10:58:49 🔔 Nuevo sismo detectado: M3.5 - Océano Pacífico [Pacifico local]
+2025/11/19 10:58:49 🔔 Nuevo sismo detectado: M2.2 - Panama-Colombia, Region Fronteriza [Caribe local]
+2025/11/19 10:58:49 🔔 Nuevo sismo detectado: M4.7 - Puerto Cortes, Costa Rica [Pacifico regional]
+2025/11/19 10:58:49 🔔 Nuevo sismo detectado: M4.2 - Sur de Panama [Pacifico regional]
+2025/11/19 10:58:49 🔔 Nuevo sismo detectado: M2.4 - Mar Caribe [Caribe local]
+2025/11/19 10:58:49 🔔 Nuevo sismo detectado: M1.9 - Océano Pacífico [Pacifico local]
+2025/11/19 10:58:49 🔔 Nuevo sismo detectado: M4.7 - Puerto Villamil, Ecuador [Pacifico regional]
+2025/11/19 10:58:49 🔔 Nuevo sismo detectado: M2.2 - Mar Caribe [Caribe local]
+2025/11/19 10:58:49 🔔 Nuevo sismo detectado: M5.2 - Revilla Gigedo Islands region [Pacifico lejano]
+2025/11/19 10:58:49 🔔 Nuevo sismo detectado: M4.2 - Luperon - Puerto Plata, Republica Dominicana [Caribe lejano]
+2025/11/19 10:58:49 🔔 Nuevo sismo detectado: M4.3 - Luperon - Puerto Plata, Republica Dominicana [Caribe lejano]
+2025/11/19 10:58:49 🔔 Nuevo sismo detectado: M4.8 - Sona, Panama [Pacifico regional]
+2025/11/19 10:58:49 🔔 Nuevo sismo detectado: M1.9 - Mar Caribe [Caribe local]
+2025/11/19 10:58:49 🔔 Nuevo sismo detectado: M2.1 - Océano Pacífico [Pacifico local]
+2025/11/19 10:58:49 🔔 Nuevo sismo detectado: M1.8 - Riohacha - la Guajira, Colombia [Caribe local]
+2025/11/19 10:58:49 🔔 Nuevo sismo detectado: M4.9 - Beausejour, Guadeloupe [Caribe regional]
+2025/11/19 10:58:49 🔔 Nuevo sismo detectado: M2.1 - Panama-Colombia, Region Fronteriza [Caribe local]
+2025/11/19 10:58:49 🔔 Nuevo sismo detectado: M3.8 - Miches, Dominican Republic [Caribe regional]
+2025/11/19 10:58:50 🔔 Nuevo sismo detectado: M2.2 - Buenaventura - Valle del Cauca, Colombia [Pacifico local]
+2025/11/19 10:58:50    ➕ Fuente 3: 27 nuevos sismos de 346 totales
+2025/11/19 10:58:50 ✅ Total: 61 nuevos sismos agregados
+2025/11/19 10:58:50    📊 Total en memoria: 61 sismos
+2025/11/19 11:00:50 🔄 Obteniendo datos de sismos...
+2025/11/19 11:00:51    ℹ️  No hay sismos nuevos
+2025/11/19 11:00:51    📊 Total en memoria: 61 sismos
+2025/11/19 11:02:50 🔄 Obteniendo datos de sismos...
+2025/11/19 11:02:51    ℹ️  No hay sismos nuevos
+2025/11/19 11:02:51    📊 Total en memoria: 61 sismos
+2025/11/19 11:04:50 🔄 Obteniendo datos de sismos...
+2025/11/19 11:04:51    ℹ️  No hay sismos nuevos
+2025/11/19 11:04:51    📊 Total en memoria: 61 sismos
+2025/11/19 11:06:50 🔄 Obteniendo datos de sismos...
+2025/11/19 11:06:51    ℹ️  No hay sismos nuevos
+2025/11/19 11:06:51    📊 Total en memoria: 61 sismos
+2025/11/19 11:08:50 🔄 Obteniendo datos de sismos...
+2025/11/19 11:08:51    ℹ️  No hay sismos nuevos
+2025/11/19 11:08:51    📊 Total en memoria: 61 sismos
+2025/11/19 11:10:50 🔄 Obteniendo datos de sismos...
+2025/11/19 11:10:51    ℹ️  No hay sismos nuevos
+2025/11/19 11:10:51    📊 Total en memoria: 61 sismos
+2025/11/19 11:12:50 🔄 Obteniendo datos de sismos...
+2025/11/19 11:12:52    ℹ️  No hay sismos nuevos
+2025/11/19 11:12:52    📊 Total en memoria: 61 sismos
+2025/11/19 11:14:50 🔄 Obteniendo datos de sismos...
+2025/11/19 11:14:51    ℹ️  No hay sismos nuevos
+2025/11/19 11:14:51    📊 Total en memoria: 61 sismos
+2025/11/19 11:16:50 🔄 Obteniendo datos de sismos...
+2025/11/19 11:16:52    ℹ️  No hay sismos nuevos
+2025/11/19 11:16:52    📊 Total en memoria: 61 sismos
+2025/11/19 11:18:50 🔄 Obteniendo datos de sismos...
+2025/11/19 11:18:51    ℹ️  No hay sismos nuevos
+2025/11/19 11:18:51    📊 Total en memoria: 61 sismos
+2025/11/19 11:20:50 🔄 Obteniendo datos de sismos...
+2025/11/19 11:20:51    ℹ️  No hay sismos nuevos
+2025/11/19 11:20:51    📊 Total en memoria: 61 sismos
+2025/11/19 11:22:50 🔄 Obteniendo datos de sismos...
+2025/11/19 11:22:51    ℹ️  No hay sismos nuevos
+2025/11/19 11:22:51    📊 Total en memoria: 61 sismos
+2025/11/19 11:24:50 🔄 Obteniendo datos de sismos...
+2025/11/19 11:24:51 Error upgrading to WebSocket: websocket: the client is not using the websocket protocol: 'upgrade' token not found in 'Connection' header
+2025/11/19 11:24:51    ℹ️  No hay sismos nuevos
+2025/11/19 11:24:51    📊 Total en memoria: 61 sismos
+2025/11/19 11:26:50 🔄 Obteniendo datos de sismos...
+2025/11/19 11:26:51    ℹ️  No hay sismos nuevos
+2025/11/19 11:26:51    📊 Total en memoria: 61 sismos
+2025/11/19 11:28:50 🔄 Obteniendo datos de sismos...
+2025/11/19 11:28:51    ℹ️  No hay sismos nuevos
+2025/11/19 11:28:51    📊 Total en memoria: 61 sismos
+2025/11/19 11:30:50 🔄 Obteniendo datos de sismos...
+2025/11/19 11:30:52    ℹ️  No hay sismos nuevos
+2025/11/19 11:30:52    📊 Total en memoria: 61 sismos
+2025/11/19 11:32:50 🔄 Obteniendo datos de sismos...
+2025/11/19 11:32:51    ℹ️  No hay sismos nuevos
+2025/11/19 11:32:51    📊 Total en memoria: 61 sismos
+2025/11/19 11:34:50 🔄 Obteniendo datos de sismos...
+2025/11/19 11:34:52    ℹ️  No hay sismos nuevos
+2025/11/19 11:34:52    📊 Total en memoria: 61 sismos
+2025/11/19 11:36:50 🔄 Obteniendo datos de sismos...
+2025/11/19 11:36:55    ℹ️  No hay sismos nuevos
+2025/11/19 11:36:55    📊 Total en memoria: 61 sismos
+2025/11/19 11:38:50 🔄 Obteniendo datos de sismos...
+2025/11/19 11:38:51    ℹ️  No hay sismos nuevos
+2025/11/19 11:38:51    📊 Total en memoria: 61 sismos
+2025/11/19 11:40:50 🔄 Obteniendo datos de sismos...
+2025/11/19 11:40:51    ℹ️  No hay sismos nuevos
+2025/11/19 11:40:51    📊 Total en memoria: 61 sismos
+2025/11/19 11:42:50 🔄 Obteniendo datos de sismos...
+2025/11/19 11:42:51    ℹ️  No hay sismos nuevos
+2025/11/19 11:42:51    📊 Total en memoria: 61 sismos

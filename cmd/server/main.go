@@ -171,9 +171,14 @@ func fetchAllData(fetchers []fetcher.Fetcher, manager *manager.EarthquakeManager
 func startWebSocketNotifications(manager *manager.EarthquakeManager, hub *websocket.Hub) {
 	earthquakeChan := manager.GetNewEarthquakeChannel()
 
-	for eq := range earthquakeChan {
-		log.Printf("🔔 Nuevo sismo detectado: M%.1f - %s [%s %s]",
-			eq.Magnitude, eq.Location, eq.Oceano, eq.OceanoRegion)
-		hub.BroadcastEarthquake(eq)
+	for event := range earthquakeChan {
+		if event.IsUpdate {
+			log.Printf("� Sismo actualizado: M%.1f - %s [%s %s]",
+				event.Earthquake.Magnitud, event.Earthquake.Place, event.Earthquake.Oceano, event.Earthquake.OceanoRegion)
+		} else {
+			log.Printf("�🔔 Nuevo sismo detectado: M%.1f - %s [%s %s]",
+				event.Earthquake.Magnitud, event.Earthquake.Place, event.Earthquake.Oceano, event.Earthquake.OceanoRegion)
+		}
+		hub.BroadcastEarthquake(event.Earthquake)
 	}
 }

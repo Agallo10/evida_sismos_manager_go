@@ -73,16 +73,22 @@ func (f *USGSFetcher) Fetch() ([]models.Earthquake, error) {
 			continue
 		}
 
+		// Convertir tiempo UTC a hora local de Bogotá (UTC-5)
+		utcTime := time.UnixMilli(feature.Properties.Time)
+		bogotaLocation := time.FixedZone("America/Bogota", -5*60*60)
+		localTime := utcTime.In(bogotaLocation)
+
 		eq := models.Earthquake{
-			ID:        feature.ID,
-			Magnitude: feature.Properties.Mag,
-			Location:  feature.Properties.Place,
-			Longitude: feature.Geometry.Coordinates[0],
-			Latitude:  feature.Geometry.Coordinates[1],
-			Depth:     feature.Geometry.Coordinates[2],
-			Time:      time.UnixMilli(feature.Properties.Time),
-			Source:    "USGS",
-			URL:       feature.Properties.URL,
+			ID:          feature.ID,
+			Magnitud:    feature.Properties.Mag,
+			Place:       feature.Properties.Place,
+			CloserTowns: feature.Properties.Place, // Para USGS, closerTowns es igual a place
+			Longitud:    feature.Geometry.Coordinates[0],
+			Latitud:     feature.Geometry.Coordinates[1],
+			Profundidad: feature.Geometry.Coordinates[2],
+			Time:        localTime,
+			Fuente:      "USGS",
+			URL:         feature.Properties.URL,
 		}
 
 		earthquakes = append(earthquakes, eq)
