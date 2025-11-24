@@ -16,6 +16,7 @@ He creado exitosamente una aplicación en **Go** que:
    - Determina el **océano** (Pacífico / Caribe)
    - Determina la **región** (local / regional / lejano)
    - Utiliza los polígonos del archivo `datosLC.json` (698K puntos para Pacífico)
+   - **Cálculo automático de `longitudOperativa`**: Para sismos en el oeste del Pacífico (LatlonCPWorldEste), calcula `longitudOperativa = longitud - 360` para facilitar visualizaciones
 
 3. **Sistema en tiempo real**:
    - Corre continuamente como servicio
@@ -120,32 +121,64 @@ ws.onmessage = (event) => {
         //   place: "...",
         //   closerTowns: "...",
         //   latitud: 4.5,
-        //   longitud: -75.2,
+        //   longitud: 150.2,
+        //   longitud: 150.2,
+        //   longitudOperativa: -209.8,  // Siempre presente en todos los sismos
         //   profundidad: 10.5,
         //   localTime: "2025-11-03 07:34:56",
         //   fuente: "USGS",
         //   oceano: "Pacifico",
-        //   oceanoRegion: "local",
+        //   oceanoRegion: "lejano",
         //   url: "https://earthquake.usgs.gov/..."
         // }
     }
 };
 ```
 
+**Campo `longitudOperativa`:**
+
+Este campo está **presente en todos los sismos** para facilitar el pintado en mapas:
+
+1. **Para sismos en el oeste del Pacífico** (región `LatlonCPWorldEste` con longitudes > 180°):
+   - Cálculo: `longitudOperativa = longitud - 360`
+   - Ejemplo: Japón con `longitud = 150.2` → `longitudOperativa = -209.8`
+   - Regiones: Japón, Indonesia, Papua Nueva Guinea, Filipinas, etc.
+
+2. **Para el resto de sismos**:
+   - Cálculo: `longitudOperativa = longitud`
+   - Ejemplo: Colombia con `longitud = -75.2` → `longitudOperativa = -75.2`
+   - Regiones: América, Caribe, Europa, África, etc.
+
+**Beneficios:**
+- ✅ Normaliza todas las coordenadas al rango -180° a 180°
+- ✅ Facilita cálculos de distancia sin saltos en la línea de fecha internacional
+- ✅ Simplifica la visualización en mapas estándar
+- ✅ Siempre disponible para todos los sismos (no es opcional)
+
 **Detección de Actualizaciones:**
 
 El sistema monitorea cambios en los siguientes parámetros de sismos existentes:
 - `magnitud` - Las agencias frecuentemente revisan las magnitudes
 - `place` y `closerTowns` - Actualizaciones en la descripción de ubicación
-- `latitud` y `longitud` - Refinamiento de coordenadas
+- `latitud`, `longitud` y `longitudOperativa` - Refinamiento de coordenadas
 - `profundidad` - Ajustes en la profundidad del hipocentro
 - `oceano` y `oceanoRegion` - Recategorización si cambian las coordenadas
 - `localTime` - Corrección del tiempo del evento
 
 Cuando se detecta cualquier cambio, el sistema:
 1. Actualiza el sismo en memoria
-2. Envía notificación por WebSocket con los datos actualizados
+2. **Envía notificación WebSocket con tipo `"earthquake_updated"`** (diferente a `"new_earthquake"`)
 3. Registra en logs: `🔄 Sismo actualizado: M5.2 - ...`
+
+**Tipos de mensajes WebSocket:**
+- `"new_earthquake"` - Para sismos nuevos
+- `"earthquake_updated"` - Para sismos con parámetros actualizados
+
+Esto permite a los clientes:
+- Distinguir entre sismos nuevos y actualizaciones
+- Actualizar sismos existentes en lugar de duplicarlos
+- Mostrar notificaciones específicas al usuario
+- Implementar lógica diferenciada (ej: resaltar cambios)
 
 ### 🔧 Configuración
 
@@ -222,14 +255,24 @@ docker run -p 8080:8080 evida-backend:latest
 5. **Zona horaria**: Todos los tiempos se convierten a UTC-5 (Bogotá) con formato `localTime`
 6. **URLs de mapas SGC**: Formato `https://archive.sgc.gov.co/events/{ID}/map.gif`
 7. **Sistema de actualizaciones**: Detecta y notifica cambios en cualquier parámetro de sismos existentes
+8. **`longitudOperativa`**: **Presente en todos los sismos**. Para sismos en LatlonCPWorldEste (longitudes > 180°) = longitud - 360, para el resto = longitud
 
 ### 🔄 Mejoras Recientes
 
 - ✅ **Sistema de detección de actualizaciones** (19/11/2025)
   - Compara todos los parámetros importantes al recibir datos
-  - Envía notificaciones diferenciadas por WebSocket
+  - **Envía mensajes WebSocket diferenciados**: `"new_earthquake"` vs `"earthquake_updated"`
   - Logs distinguen entre sismos nuevos y actualizados
   - Thread-safe con manejo de canales non-blocking
+  - Permite a clientes implementar lógica específica para cada caso
+  - Thread-safe con manejo de canales non-blocking
+
+- ✅ **Campo `longitudOperativa`** (22/11/2025)
+  - **Actualización**: Ahora está presente en TODOS los sismos (no es opcional)
+  - Para sismos en LatlonCPWorldEste: `longitudOperativa = longitud - 360`
+  - Para el resto de sismos: `longitudOperativa = longitud`
+  - Facilita pintado en mapas al normalizar coordenadas a rango -180° a 180°
+  - Simplifica cálculos de distancia y visualizaciones
 
 ### 🔄 Próximos Pasos (Opcionales)
 

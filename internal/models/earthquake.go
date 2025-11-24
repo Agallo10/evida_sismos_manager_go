@@ -7,18 +7,19 @@ import (
 
 // Earthquake representa un sismo con toda su información
 type Earthquake struct {
-	ID           string    `json:"id"`
-	Magnitud     float64   `json:"magnitud"`
-	Place        string    `json:"place"`
-	CloserTowns  string    `json:"closerTowns,omitempty"`
-	Latitud      float64   `json:"latitud"`
-	Longitud     float64   `json:"longitud"`
-	Profundidad  float64   `json:"profundidad"`            // en kilómetros
-	Time         time.Time `json:"-"`                      // Campo interno (UTC)
-	Fuente       string    `json:"fuente"`                 // USGS, GEOFON, SGC
-	Oceano       string    `json:"oceano,omitempty"`       // Pacifico, Caribe
-	OceanoRegion string    `json:"oceanoRegion,omitempty"` // local, regional, lejano
-	URL          string    `json:"url,omitempty"`
+	ID                string    `json:"id"`
+	Magnitud          float64   `json:"magnitud"`
+	Place             string    `json:"place"`
+	CloserTowns       string    `json:"closerTowns,omitempty"`
+	Latitud           float64   `json:"latitud"`
+	Longitud          float64   `json:"longitud"`
+	LongitudOperativa float64   `json:"longitudOperativa"`      // longitud - 360 para sismos en CPWorldEste, o igual a longitud para otros
+	Profundidad       float64   `json:"profundidad"`            // en kilómetros
+	Time              time.Time `json:"-"`                      // Campo interno (UTC)
+	Fuente            string    `json:"fuente"`                 // USGS, GEOFON, SGC
+	Oceano            string    `json:"oceano,omitempty"`       // Pacifico, Caribe
+	OceanoRegion      string    `json:"oceanoRegion,omitempty"` // local, regional, lejano
+	URL               string    `json:"url,omitempty"`
 }
 
 // MarshalJSON personaliza la serialización del Earthquake para formatear el tiempo

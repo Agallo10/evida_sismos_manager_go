@@ -27,9 +27,16 @@ cd evida_backend_go
 # Instalar dependencias
 go mod download
 
+# IMPORTANTE: Configurar archivos de datos geográficos
+# Ver DATA_SETUP.md para instrucciones sobre los archivos grandes
+# Los archivos datosLC.json y latlonCPWorldEste.json son requeridos
+
 # Ejecutar
 go run cmd/server/main.go
 ```
+
+> **Nota:** Este proyecto requiere archivos de datos geográficos grandes (~113MB total). 
+> Consulta [DATA_SETUP.md](DATA_SETUP.md) para instrucciones de configuración.
 
 ## Uso
 
@@ -49,6 +56,7 @@ Recibirás notificaciones JSON cuando lleguen sismos nuevos o se actualicen:
     "closerTowns": "Example City",
     "latitud": 4.5,
     "longitud": -75.2,
+    "longitudOperativa": -235.2,
     "profundidad": 10.5,
     "localTime": "2025-11-03 07:34:56",
     "fuente": "USGS",
@@ -59,16 +67,59 @@ Recibirás notificaciones JSON cuando lleguen sismos nuevos o se actualicen:
 }
 ```
 
+**Nota sobre `longitudOperativa`:**
+Este campo está **siempre presente** en todos los sismos y facilita el pintado en mapas:
+- **Para sismos en `LatlonCPWorldEste`** (oeste del Pacífico, longitudes > 180°): `longitudOperativa = longitud - 360`
+  - Ejemplos: Japón, Indonesia, Papua Nueva Guinea (longitud: 150° → longitudOperativa: -210°)
+- **Para el resto de sismos**: `longitudOperativa = longitud`
+  - Ejemplos: América, Caribe (longitud: -75° → longitudOperativa: -75°)
+- Esto normaliza todas las coordenadas al rango -180° a 180° para facilitar cálculos y visualizaciones en mapas
+
 **Sismo Actualizado:**
 Los sismos pueden actualizarse cuando las agencias revisan parámetros como magnitud, profundidad o ubicación. El sistema detecta automáticamente estos cambios comparando:
 - Magnitud
 - Ubicación (place y closerTowns)
-- Coordenadas (latitud, longitud)
+- Coordenadas (latitud, longitud, longitudOperativa)
 - Profundidad
 - Categorización (océano y región)
 - Tiempo del evento
 
-Cuando se detecta un cambio, se envía la misma estructura JSON con los valores actualizados.
+Cuando se detecta un cambio, se envía un mensaje con tipo diferente:
+```json
+{
+  "type": "earthquake_updated",
+  "data": {
+    "id": "us7000example",
+    "magnitud": 5.3,  // ← Valor actualizado
+    "place": "10 km S of Example City",
+    "closerTowns": "Example City",
+    "latitud": 4.52,  // ← Coordenadas refinadas
+    "longitud": -75.18,
+    "longitudOperativa": -75.18,
+    "profundidad": 12.0,  // ← Profundidad revisada
+    "localTime": "2025-11-03 07:34:56",
+    "fuente": "USGS",
+    "oceano": "Pacifico",
+    "oceanoRegion": "local",
+    "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000example"
+  }
+}
+```
+
+**Manejo en el cliente:**
+```javascript
+ws.onmessage = (event) => {
+  const message = JSON.parse(event.data);
+  
+  if (message.type === 'new_earthquake') {
+    // Agregar nuevo sismo al mapa/lista
+    addEarthquakeToMap(message.data);
+  } else if (message.type === 'earthquake_updated') {
+    // Actualizar sismo existente (usar message.data.id)
+    updateEarthquakeOnMap(message.data);
+  }
+};
+```
 
 ### API REST
 

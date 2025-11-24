@@ -67,6 +67,15 @@ func CategorizeEarthquake(eq *models.Earthquake) {
 	if PointInPolygon(point, regionData.LatlonCPWorld) {
 		eq.Oceano = "Pacifico"
 		eq.OceanoRegion = determinarRegionPacifico(point)
+		eq.LongitudOperativa = eq.Longitud // Para esta región, longitudOperativa = longitud
+		return
+	}
+
+	// Pacífico CP Este - siempre lejano
+	if len(regionData.LatlonCPWorldEste) > 0 && PointInPolygon(point, regionData.LatlonCPWorldEste) {
+		eq.Oceano = "Pacifico"
+		eq.OceanoRegion = "lejano"
+		eq.LongitudOperativa = eq.Longitud - 360 // Para sismos en CPWorldEste, restar 360
 		return
 	}
 
@@ -74,6 +83,7 @@ func CategorizeEarthquake(eq *models.Earthquake) {
 	if PointInPolygon(point, regionData.LatlonPacificoLocal) {
 		eq.Oceano = "Pacifico"
 		eq.OceanoRegion = "local"
+		eq.LongitudOperativa = eq.Longitud
 		return
 	}
 
@@ -81,6 +91,7 @@ func CategorizeEarthquake(eq *models.Earthquake) {
 	if len(regionData.LatlonPacificoRegional) > 0 && PointInPolygon(point, regionData.LatlonPacificoRegional) {
 		eq.Oceano = "Pacifico"
 		eq.OceanoRegion = "regional"
+		eq.LongitudOperativa = eq.Longitud
 		return
 	}
 
@@ -88,13 +99,15 @@ func CategorizeEarthquake(eq *models.Earthquake) {
 	if len(regionData.LatlonPacificoLocal20Km) > 0 && PointInPolygon(point, regionData.LatlonPacificoLocal20Km) {
 		eq.Oceano = "Pacifico"
 		eq.OceanoRegion = "local"
+		eq.LongitudOperativa = eq.Longitud
 		return
 	}
 
 	// Caribe Lejano
 	if evaluarPuntosMultiples(point, regionData.LatlonCCWorld) {
-		eq.Oceano = "Caribe"
+		eq.Oceano = "Atlantico"
 		eq.OceanoRegion = "lejano"
+		eq.LongitudOperativa = eq.Longitud
 		return
 	}
 
@@ -102,6 +115,7 @@ func CategorizeEarthquake(eq *models.Earthquake) {
 	if evaluarPuntosMultiples(point, regionData.LatlonCaribeRegional) {
 		eq.Oceano = "Caribe"
 		eq.OceanoRegion = "regional"
+		eq.LongitudOperativa = eq.Longitud
 		return
 	}
 
@@ -110,12 +124,14 @@ func CategorizeEarthquake(eq *models.Earthquake) {
 		PointInPolygon(point, regionData.LatlonCaribeLocalInsular) {
 		eq.Oceano = "Caribe"
 		eq.OceanoRegion = "local"
+		eq.LongitudOperativa = eq.Longitud
 		return
 	}
 
 	// No categorizado
 	eq.Oceano = "Uncategorized"
 	eq.OceanoRegion = "Uncategorized"
+	eq.LongitudOperativa = eq.Longitud
 }
 
 // determinarRegionPacifico determina la subregión dentro del Pacífico CP

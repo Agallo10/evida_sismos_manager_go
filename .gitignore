@@ -26,3 +26,11 @@ vendor/
 
 # OS
 .DS_Store
+
+# Logs
+*.log
+server_test.log
+
+# Backups
+*.backup
+

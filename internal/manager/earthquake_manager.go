@@ -60,6 +60,7 @@ func (em *EarthquakeManager) AddEarthquake(eq models.Earthquake) bool {
 			existingEq.CloserTowns != eq.CloserTowns ||
 			existingEq.Latitud != eq.Latitud ||
 			existingEq.Longitud != eq.Longitud ||
+			existingEq.LongitudOperativa != eq.LongitudOperativa ||
 			existingEq.Profundidad != eq.Profundidad ||
 			existingEq.Oceano != eq.Oceano ||
 			existingEq.OceanoRegion != eq.OceanoRegion ||

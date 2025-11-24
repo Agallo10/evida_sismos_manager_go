@@ -85,9 +85,14 @@ func (h *Hub) Run() {
 }
 
 // BroadcastEarthquake envía un sismo a todos los clientes conectados
-func (h *Hub) BroadcastEarthquake(eq models.Earthquake) {
+func (h *Hub) BroadcastEarthquake(eq models.Earthquake, isUpdate bool) {
+	messageType := "new_earthquake"
+	if isUpdate {
+		messageType = "earthquake_updated"
+	}
+
 	message := Message{
-		Type: "new_earthquake",
+		Type: messageType,
 		Data: eq,
 	}
 

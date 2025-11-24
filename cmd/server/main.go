@@ -173,12 +173,12 @@ func startWebSocketNotifications(manager *manager.EarthquakeManager, hub *websoc
 
 	for event := range earthquakeChan {
 		if event.IsUpdate {
-			log.Printf("� Sismo actualizado: M%.1f - %s [%s %s]",
+			log.Printf("🔄 Sismo actualizado: M%.1f - %s [%s %s]",
 				event.Earthquake.Magnitud, event.Earthquake.Place, event.Earthquake.Oceano, event.Earthquake.OceanoRegion)
 		} else {
-			log.Printf("�🔔 Nuevo sismo detectado: M%.1f - %s [%s %s]",
+			log.Printf(" Nuevo sismo detectado: M%.1f - %s [%s %s]",
 				event.Earthquake.Magnitud, event.Earthquake.Place, event.Earthquake.Oceano, event.Earthquake.OceanoRegion)
 		}
-		hub.BroadcastEarthquake(event.Earthquake)
+		hub.BroadcastEarthquake(event.Earthquake, event.IsUpdate)
 	}
 }
