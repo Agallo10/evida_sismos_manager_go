@@ -4,8 +4,10 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"time"
 
 	"github.com/andresgallo/evida_backend_go/internal/manager"
+	"github.com/andresgallo/evida_backend_go/internal/models"
 	"github.com/andresgallo/evida_backend_go/internal/websocket"
 	ws "github.com/gorilla/websocket"
 )
@@ -44,6 +46,7 @@ func (s *Server) SetupRoutes() *http.ServeMux {
 	mux.HandleFunc("/api/earthquakes", s.handleGetEarthquakes)
 	mux.HandleFunc("/api/stats", s.handleGetStats)
 	mux.HandleFunc("/api/health", s.handleHealth)
+	mux.HandleFunc("/api/test/earthquakes", s.handleTestEarthquakes)
 
 	return mux
 }
@@ -127,4 +130,62 @@ func (s *Server) handleHealth(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 
 	json.NewEncoder(w).Encode(response)
+}
+
+// handleTestEarthquakes retorna sismos de prueba
+func (s *Server) handleTestEarthquakes(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	// Crear fecha/hora actual
+	dateTimeZone := time.Now()
+
+	// Crear los sismos de prueba
+	testEarthquakes := []models.Earthquake{
+		{
+			ID:          "manualNew4",
+			Latitud:     2,
+			Longitud:    -80,
+			Magnitud:    6,
+			Profundidad: 10,
+			Place:       "117 km S of La Libertad, El Salvador place",
+			CloserTowns: "117 km S of La Libertad, El Salvador closerTowns",
+			Fuente:      ",us,",
+			Time:        dateTimeZone,
+		},
+		{
+			ID:          "manual124",
+			Latitud:     -7,
+			Longitud:    -80,
+			Magnitud:    7,
+			Profundidad: 10,
+			Place:       "117 km S of La Libertad, El Salvador",
+			CloserTowns: "117 km S of La Libertad, El Salvador",
+			Fuente:      ",us,",
+			Time:        dateTimeZone,
+		},
+		{
+			ID:          "manualNew5",
+			Latitud:     2,
+			Longitud:    -80,
+			Magnitud:    8,
+			Profundidad: 10,
+			Place:       "117 km S of La Libertad, El Salvador place",
+			CloserTowns: "117 km S of La Libertad, El Salvador closerTowns",
+			Fuente:      ",us,",
+			Time:        dateTimeZone,
+		},
+	}
+
+	// Enviar respuesta JSON
+	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+
+	if err := json.NewEncoder(w).Encode(testEarthquakes); err != nil {
+		log.Printf("Error encoding test earthquakes: %v", err)
+		http.Error(w, "Internal server error", http.StatusInternalServerError)
+		return
+	}
 }
