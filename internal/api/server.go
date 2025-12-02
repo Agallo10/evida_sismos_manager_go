@@ -242,6 +242,20 @@ func (s *Server) handleTestEarthquakes(w http.ResponseWriter, r *http.Request) {
 			Oceano:            "Atlantico",
 			OceanoRegion:      "lejano",
 		},
+		{
+			ID:                "manualPacificoLocal",
+			Latitud:           2,
+			Longitud:          -80,
+			LongitudOperativa: -80,
+			Magnitud:          8,
+			Profundidad:       10,
+			Place:             "Pacifico Local - Pacific",
+			CloserTowns:       "Pacifico Local - Pacific",
+			Fuente:            "SGC",
+			Time:              dateTimeZone,
+			Oceano:            "Pacifico",
+			OceanoRegion:      "local",
+		},
 	}
 
 	// Enviar respuesta JSON
